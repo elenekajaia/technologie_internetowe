@@ -9,10 +9,14 @@ $db['name'] = "YourDBname"; // Database name
 ?>
 */
 // Include configuration
-include('config.php');
+// include('config.php');
 
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "aplikacja_bankowa";
 // Create connection
-$conn = mysqli_connect($db['host'], $db['user'], $db['pass'], $db['name']);
+$conn = mysqli_connect($servername, $username, $password, $dbname);
 
 // Check connection
 if (!$conn) {
@@ -28,7 +32,7 @@ if (isset($_POST['send'])) {
     $name = htmlspecialchars($_POST['name']);
     $phone = htmlspecialchars($_POST['phone']);
     $email = htmlspecialchars($_POST['email']);
-    $pass = htmlspecialchars($_POST['password']);
+    $pass = htmlspecialchars($_POST['pass']);
     $hash = password_hash($pass, PASSWORD_BCRYPT);
 
     // Prepare the SQL statement
