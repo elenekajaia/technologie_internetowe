@@ -1,0 +1,2 @@
+äxø«WAAÚ¾?Ï‚ˆ¾×Ós (id, email, ...) VALUES ('1', 'julia@kapica.pl', ...);
+INSERT INTO users (id, email, ...) VALUES ('2', 'admin@admin.pl', ...);
