@@ -1,50 +1,39 @@
 <?php
-// Database connection parameters
-$host = 'localhost';
-$username = 'root';
-$password = '';
-$database = 'aplikacja_bankowa';
+// Configuration
+$databaseHost = 'localhost';
+$databaseName = 'aplikacja_bankowa';
+$databaseUser = 'root';
+$databasePassword = '';
 
-// Backup file path and name
+// Database connection
+$mysqli = new mysqli($databaseHost, $databaseUser, $databasePassword, $databaseName);
+
+// Check connection
+if ($mysqli->connect_error) {
+    die("Connection failed: " . $mysqli->connect_error);
+}
+
+// Backup database query
+$backupQuery = "mysqldump --user={$databaseUser} --password={$databasePassword} --host={$databaseHost} {$databaseName} > backup.sql";
+exec($backupQuery);
+
+// Encryption
+$encryptionKey = 'bezpieczenstwo_systemow';
 $backupFile = 'backup.sql';
+$encryptedFile = 'encrypted_backup.dat';
 
-// Encryption settings
-$encryptionMethod = "AES-256-CBC";
-$encryptionKey = "bezpieczenstwo_systemow";
+// Read the backup file
+$backupData = file_get_contents($backupFile);
 
-// Connect to the database
-$connection = new mysqli($host, $username, $password, $database);
+// Encrypt the data
+$encryptedData = openssl_encrypt($backupData, 'AES-256-CBC', $encryptionKey, 0, substr(md5('your_iv'), 0, 16));
 
-if ($connection->connect_errno) {
-    die("Failed to connect to MySQL: " . $connection->connect_error);
-}
+// Write the encrypted data to a file
+file_put_contents($encryptedFile, $encryptedData);
 
-// Backup the database
-$query = "SELECT * FROM users";
-$result = $connection->query($query);
+// Cleanup: Delete the plain backup file
+unlink($backupFile);
 
-if (!$result) {
-    die("Backup query failed: " . $connection->error);
-}
-
-// Generate backup file content
-$backupContent = '';
-while ($row = $result->fetch_assoc()) {
-    // Format the row data as SQL insert statements
-    $insertStatement = "INSERT INTO users (id, email, ...) VALUES ('" . $row['id'] . "', '" . $row['email'] . "', ...);";
-    $backupContent .= $insertStatement . "\n";
-}
-
-// Encrypt the backup content
-$encryptedContent = openssl_encrypt($backupContent, $encryptionMethod, $encryptionKey, 0, random_bytes(16));
-
-// Write the encrypted backup content to a file
-if (file_put_contents($backupFile, $encryptedContent) === false) {
-    die("Failed to write backup file");
-}
-
-// Close the database connection
-$connection->close();
-
-echo "Backup completed successfully.";
+// Output success message
+echo "Database backup encrypted and saved to {$encryptedFile}.";
 ?>

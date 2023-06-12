@@ -30,7 +30,7 @@
                         <i class="input-icon uil uil-at"></i>
                       </div>
                       <div class="form-group mt-2">
-                        <input type="password" class="form-style" name="pass" id="pass" placeholder="pass" required>
+                        <input type="password" class="form-style" name="password" id="password" placeholder="Password" required>
                         <i class="input-icon uil uil-lock-alt"></i>
                       </div>
                       <input type="submit" value="Login">
@@ -45,11 +45,11 @@
                       <form action="register.php" method="post">
                         <h4 class="mb-3 pb-3">Sign Up</h4>
                         <div class="form-group">
-                          <input type="text" class="form-style" placeholder="Full Name" name="name">
+                          <input type="text" class="form-style" placeholder="Full Name" name="name" required>
                           <i class="input-icon uil uil-user"></i>
                         </div>
                         <div class="form-group mt-2">
-                          <input type="tel" class="form-style" placeholder="Phone Number" name="phone">
+                          <input type="tel" class="form-style" placeholder="Phone Number" name="phone" required>
                           <i class="input-icon uil uil-phone"></i>
                         </div>
                         <div class="form-group mt-2">
@@ -57,7 +57,7 @@
                           <i class="input-icon uil uil-at"></i>
                         </div>
                         <div class="form-group mt-2">
-                          <input type="password" class="form-style" placeholder="Password" name="pass">
+                          <input type="password" class="form-style" placeholder="Password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Hasło musi zawierać conajmniej jedną cyfrę, jedną WIELKĄ literę i conajmniej 8 znaków" required>
                           <i class="input-icon uil uil-lock-alt"></i>
                         </div>
                         <button type="submit" class="btn mt-4" name="send">Register</button>

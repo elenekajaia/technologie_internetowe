@@ -21,16 +21,16 @@ if (isset($_POST['send'])) {
     $name = htmlspecialchars($_POST['name']);
     $phone = htmlspecialchars($_POST['phone']);
     $email = htmlspecialchars($_POST['email']);
-    $pass = htmlspecialchars($_POST['pass']);
-    $hash = password_hash($pass, PASSWORD_BCRYPT);
+    $password = htmlspecialchars($_POST['password']);
+    $hash = password_hash($password, PASSWORD_BCRYPT);
 
     // Prepare the SQL statement
-    $stmt = mysqli_prepare($conn, "INSERT INTO users (name, phone, email, pass) VALUES (?, ?, ?, ?)");
-    mysqli_stmt_bind_param($stmt, 'ssss', $name, $phone, $email, $hash);
+    $stmt = mysqli_prepare($conn, "INSERT INTO users (name, phone, email, password) VALUES (?, ?, ?, ?)");
+    mysqli_stmt_bind_param($stmt, 'siss', $name, $phone, $email, $hash);
 
     // Execute the statement
     if (mysqli_stmt_execute($stmt)) {
-        header("Location: index.php");
+        header("Location: main.html");
     } else {
         echo "Error: " . mysqli_stmt_error($stmt);
     }

@@ -13,21 +13,35 @@ if ($connection->connect_errno) {
 
 // Get the entered username and password
 $name = $_POST['name'];
-$pass = $_POST['pass'];
+$password = $_POST['password'];
 
 // Query the database to check admin credentials
-$query = "SELECT * FROM admins WHERE name = '$name' AND pass = '$pass'";
+$query = "SELECT * FROM admins WHERE name = '$name' AND pass = '$password'";
 $result = $connection->query($query);
 
 if ($result->num_rows == 1) {
     // Admin login successful
     session_start();
     $_SESSION['name'] = $name;
-    header("Location: admin.html"); // Redirect to the admin dashboard or desired page
+    header("Location: admin.php"); // Redirect to the admin dashboard or desired page
 } else {
     // Admin login failed
     echo "Invalid username or password";
 }
+
+$query = "SELECT * FROM users WHERE name = '$name' AND password = '$password'";
+$result = $connection->query($query);
+
+if ($result->num_rows == 1) {
+    // Admin login successful
+    session_start();
+    $_SESSION['name'] = $name;
+    header("Location: main.html"); // Redirect to the admin dashboard or desired page
+} else {
+    // Admin login failed
+    echo "Invalid username or password";
+}
+
 
 // Close the database connection
 $connection->close();
