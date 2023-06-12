@@ -102,46 +102,50 @@
   </table>
 
   <h2>Get User by ID</h2>
-  <form action="get_user.php" method="GET">
-  <input type="text" name="user_id" placeholder="User ID">
-  <input type="submit" value="Get User">
+  <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
+    <input type="text" name="user_id" placeholder="User ID">
+    <input type="submit" value="Get User">
+  </form>
 
+  <!-- Display User Details -->
   <?php
-    if (isset($_GET['user_id'])) {
-      // Connect to the database
-      $servername = "localhost";
-      $db_username = "root";
-      $db_password = "";
-      $dbname = "aplikacja_bankowa";
+  if (isset($_GET['user_id'])) {
+    // Connect to the database
+    $servername = "localhost";
+    $db_username = "root";
+    $db_password = "";
+    $dbname = "aplikacja_bankowa";
 
-      $conn = new mysqli($servername, $db_username, $db_password, $dbname);
+    $conn = new mysqli($servername, $db_username, $db_password, $dbname);
 
-      if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-      }
-
-      $user_id = $_GET['user_id'];
-
-      // Retrieve user from the database
-      $sql = "SELECT * FROM users WHERE id = $user_id";
-      $result = $conn->query($sql);
-
-      if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-
-        // Display user details
-        echo "<p><strong>Username:</strong> " . $row["name"] . "</p>";
-        echo "<p><strong>Email:</strong> " . $row["email"] . "</p>";
-      } else {
-        echo "<p>No user found with ID: " . $user_id . "</p>";
-      }
-
-      // Close the database connection
-      $conn->close();
+    if ($conn->connect_error) {
+      die("Connection failed: " . $conn->connect_error);
     }
-    ?>
 
-</form>
+    $user_id = $_GET['user_id'];
+
+    // Retrieve user from the database
+    $sql = "SELECT * FROM users WHERE id = $user_id";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+      $row = $result->fetch_assoc();
+      ?>
+      <!-- User Details -->
+      <h2>User Details</h2>
+      <p><strong>ID:</strong><?php echo $row["id"];?></p>
+      <p><strong>Username:</strong> <?php echo $row["name"]; ?></p>
+      <p><strong>Phone:</strong> <?php echo $row["phone"]; ?></p>
+      <p><strong>Email:</strong> <?php echo $row["email"]; ?></p>
+      <?php
+    } else {
+      echo "<p>No user found with ID: " . $user_id . "</p>";
+    }
+
+    // Close the database connection
+    $conn->close();
+  }
+  ?>
 </section>
   
   <section class="update-user">

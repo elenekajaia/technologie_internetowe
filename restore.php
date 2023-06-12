@@ -32,7 +32,7 @@ $restoreQuery = "mysql --user={$databaseUser} --password={$databasePassword} --h
 exec($restoreQuery);
 
 // Cleanup: Delete the decrypted backup file
-unlink($decryptedFile);
+// unlink($decryptedFile);
 
 // Output success message
 echo "Database backup decrypted and restored.";
