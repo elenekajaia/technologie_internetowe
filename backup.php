@@ -1,39 +1,37 @@
 <?php
-// Configuration
 $databaseHost = 'localhost';
 $databaseName = 'aplikacja_bankowa';
 $databaseUser = 'root';
 $databasePassword = '';
 
-// Database connection
 $mysqli = new mysqli($databaseHost, $databaseUser, $databasePassword, $databaseName);
 
-// Check connection
 if ($mysqli->connect_error) {
     die("Connection failed: " . $mysqli->connect_error);
 }
 
-// Backup database query
-$backupQuery = "mysqldump --user={$databaseUser} --password={$databasePassword} --host={$databaseHost} {$databaseName} > backup.sql";
-exec($backupQuery);
-
-// Encryption
+// dane do szyfrowania
 $encryptionKey = 'bezpieczenstwo_systemow';
 $backupFile = 'backup.sql';
 $encryptedFile = 'encrypted_backup.dat';
 
-// Read the backup file
+// zapisanie bazy danych do pliku
+$backupQuery = "mysqldump --user={$databaseUser} --password={$databasePassword} --host={$databaseHost} {$databaseName} > {$backupFile}";
+exec($backupQuery);
+
+// odczyt backupu
 $backupData = file_get_contents($backupFile);
 
-// Encrypt the data
-$encryptedData = openssl_encrypt($backupData, 'AES-256-CBC', $encryptionKey, 0, substr(md5('your_iv'), 0, 16));
+// zaszyfrowanie danych
+$encryptedData = openssl_encrypt($backupData, 'AES-256-CBC', $encryptionKey, 0, substr(hash('sha256','your_iv'), 0, 16));
 
-// Write the encrypted data to a file
+// zapis zaszyfrowanych danych do pliku
 file_put_contents($encryptedFile, $encryptedData);
 
-// Cleanup: Delete the plain backup file
+// usuniecie danych z pliku
 unlink($backupFile);
 
-// Output success message
 echo "Database backup encrypted and saved to {$encryptedFile}.";
+
+header("Location: admin.php");
 ?>

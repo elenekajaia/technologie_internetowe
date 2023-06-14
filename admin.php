@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Admin Dashboard</title>
+    <title>Panel admina</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="admin_style.css">
@@ -9,58 +9,64 @@
 <body>
 
         <header>
+          <!-- navbar -->
           <nav>
-            <h1>Admin Dashboard</h1>
+            <h1>Panel admina</h1>
               <ul>
-                <li><a href="#">Database Backup</a></li>
-                <li><a href="#">Backup Restoration</a></li>
-                <li><a href="#">User Management</a></li>
-                <li><a href="#">Transactions History</a></li>
-                <li><a href="#">Users Accounts</a></li>
-                <li><a href="#">Logout</a></li>
+                <li><a href="logout.php">Wyloguj</a></li> 
               </ul>
           </nav>
         </header>
 
 <main>
+<div class="dropdown-container">
 
 
+<!-- zarzadzanie baza danych -->
+<button id="dropdown-btn-1" onclick="toggleDropdown('backup-container')">Zarządzanie bazą danych</button>
+
+<section id="backup-container">
     <section class="database-backup">
-    <h1>Database Backup</h1>
+    <h1>Backup</h1>
       <form action="backup.php" method="post">
-          <input type="submit" value="Backup Database">
+          <input type="submit" value="Zrób backup bazy danych">
       </form>
     </section>
 
     <section class="backup-restoration">
-    <h1>Backup Restoration</h1>
+    <h1>Odzyskiwanie bazy danych</h1>
       <form action="restore.php" method="post" enctype="multipart/form-data">
-          <label for="backupFile">Select Encrypted Backup File:</label>
+          <label for="backupFile">Wybierz zaszyfrowany plik z bazą danych:</label>
           <input type="file" name="backupFile" id="backupFile" required><br>
 
-          <input type="submit" value="Restore Backup">
+          <input type="submit" value="Odzyskaj">
       </form>
   </section>
-    
-    <section class="add-user">
-  <h1>User Management</h1>
-  <h3>Add User</h3>
+</section>
+
+<!-- zarzadzanie uzytkownikami -->
+
+<button id="dropdown-btn-2" onclick="toggleDropdown('user-management')">Zarządzanie użytkownikami</button>
+<section id="user-management">
+  <section class="add-user">
+  <h2>Zarządzanie użytkownikami</h2>
+  <h3>Dodaj użytkownika</h3>
   <form action="add_user.php" method="POST">
-    <input type="text" name="name" placeholder="Username">
-    <input type="text" name="phone" placeholder="phone">
+    <input type="text" name="name" placeholder="Imie i nazwisko">
+    <input type="text" name="phone" placeholder="Telefon">
     <input type="email" name="email" placeholder="Email">
-    <input type="password" name="password" placeholder="Password">
+    <input type="password" name="password" placeholder="Hasło">
     
-    <input type="submit" value="Add User">
+    <input type="submit" value="Dodaj użytkownika">
   </form>
   </section>
 
-<section class="users-list">
-  <h2>Users List</h2>
+  <section class="users-list">
+  <h2>Lista użytkowników</h2>
   <table>
 
     <?php
-    // Connect to the database
+    
     $servername = "localhost";
     $db_username = "root";
     $db_password = "";
@@ -68,49 +74,43 @@
     
     $conn = new mysqli($servername, $db_username, $db_password, $dbname);
     
-    // Check connection
+   
     if ($conn->connect_error) {
       die("Connection failed: " . $conn->connect_error);
     }
     
-    // Retrieve users from the database
+    // wez dane z bazy
     $sql = "SELECT * FROM users";
     $result = $conn->query($sql);
     
-    // Display users in a table
+    // wyswietl dane
     if ($result->num_rows > 0) {
       echo "<table>";
       echo "<tr>
       <th>ID</th>
-      <th>Username</th><th>Phone</th><th>Email</th></tr>";
+      <th>Imie i nazwisko</th><th>Telefon</th><th>Email</th></tr>";
       while ($row = $result->fetch_assoc()) {
         echo "<tr>
-        <td>" . $row["id"] . "</td>
+        <td>" . $row["user_id"] . "</td>
         <td>" . $row["name"] . "</td>
         <td>" . $row["phone"] . "</td>
         <td>" . $row["email"] . "</td></tr>";
       }
       echo "</table>";
     } else {
-      echo "No users found.";
+      echo "Nie znaleziono użytkowników.";
     }
-    
-    // Close the connection
     $conn->close();
     ?>
-    
   </table>
-
-  <h2>Get User by ID</h2>
+  <h2>Wybierz użytkownika po ID</h2>
   <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
-    <input type="text" name="user_id" placeholder="User ID">
-    <input type="submit" value="Get User">
+    <input type="text" name="user_id" placeholder="ID">
+    <input type="submit" value="Znajdź użytkownika">
   </form>
-
-  <!-- Display User Details -->
   <?php
   if (isset($_GET['user_id'])) {
-    // Connect to the database
+   
     $servername = "localhost";
     $db_username = "root";
     $db_password = "";
@@ -124,57 +124,76 @@
 
     $user_id = $_GET['user_id'];
 
-    // Retrieve user from the database
+    // wez dane z bazy
     $sql = "SELECT * FROM users WHERE id = $user_id";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
       $row = $result->fetch_assoc();
       ?>
-      <!-- User Details -->
-      <h2>User Details</h2>
-      <p><strong>ID:</strong><?php echo $row["id"];?></p>
-      <p><strong>Username:</strong> <?php echo $row["name"]; ?></p>
-      <p><strong>Phone:</strong> <?php echo $row["phone"]; ?></p>
+      <!-- wyswietl dane dla user_id -->
+      <h2>Dane użytkownika</h2>
+      <p><strong>ID:</strong><?php echo $row["user_id"];?></p>
+      <p><strong>Imię i nazwisko:</strong> <?php echo $row["name"]; ?></p>
+      <p><strong>Telefon:</strong> <?php echo $row["phone"]; ?></p>
       <p><strong>Email:</strong> <?php echo $row["email"]; ?></p>
       <?php
     } else {
-      echo "<p>No user found with ID: " . $user_id . "</p>";
+      echo "<p>Nie znaleziono użytkownika z takim ID: " . $user_id . "</p>";
     }
 
-    // Close the database connection
+    
     $conn->close();
   }
   ?>
 </section>
   
   <section class="update-user">
-  <!-- Update User -->
-  <h2>Update User</h2>
+  
+  <h2>Zaktualizuj dane użytkownika</h2>
   <form action="update_user.php" method="POST">
     <input type="int" name="user_id" placeholder="ID">
-    <input type="name" name="name" placeholder="New Name">
-    <input type="phone" name="phone" placeholder="New Phone">
-    <input type="email" name="email" placeholder="New Email">
-    <input type="submit" value="Update User">
+    <input type="name" name="name" placeholder="Nowe Imie i Nazwisko">
+    <input type="phone" name="phone" placeholder="Nowy Telefon">
+    <input type="email" name="email" placeholder="Nowy Email">
+    <input type="submit" value="Zaktualizuj">
   </form>
     </section>
 
     <section class="delete-user">
-  <h2>Delete User</h2>
-  <form action="delete_user.php" method="POST">
+    <h2>Usuń użytkownika</h2>
+    <form action="delete_user.php" method="POST">
     <input type="int" name="user_id" placeholder="ID">
-    <input type="submit" value="Delete User">
+    <input type="submit" value="Usuń">
   </form>
-  </table>
+    </table>
     </section>
-    <section class="transactions-history"></section>
-    <section class="users-accounts"></section>
+</section>
+</div>
 
-   <a href="logout.php">Logout</a>
-    
+
+<button id="dropdown-btn-3" onclick="toggleDropdown('transactions')">Transakcje</button>
+<section id="transactions">
+
+</section>
+
+
+<!-- skrypt rozwijajacy opcje -->
+<script>
+  function toggleDropdown(contentId) {
+  var dropdownContent = document.getElementById(contentId);
+  dropdownContent.classList.toggle("show");
+}
+</script>
+
+
+<img src="/images/E-Wallet (HD).png" id="bck-img">
+
 
 </main>
+
+
+<!-- stopka -->
 <footer>
   <p>&copy; 2023 Technologie internetowe - Julia Kapica, Elene Kajaia
 </footer>

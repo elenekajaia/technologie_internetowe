@@ -1,48 +1,76 @@
 <?php
-// Database connection parameters
 $host = 'localhost';
 $username = 'root';
 $password = '';
 $database = 'aplikacja_bankowa';
 
-// Establish database connection
 $connection = new mysqli($host, $username, $password, $database);
 if ($connection->connect_errno) {
     die("Failed to connect to MySQL: " . $connection->connect_error);
 }
 
-// Get the entered username and password
-$name = $_POST['name'];
+
+$email = $_POST['email'];
 $password = $_POST['password'];
 
-// Query the database to check admin credentials
-$query = "SELECT * FROM admins WHERE name = '$name' AND pass = '$password'";
-$result = $connection->query($query);
 
-if ($result->num_rows == 1) {
-    // Admin login successful
-    session_start();
-    $_SESSION['name'] = $name;
-    header("Location: admin.php"); // Redirect to the admin dashboard or desired page
-} else {
-    // Admin login failed
-    echo "Invalid username or password";
+
+// ---------generuj numer konta------------
+function generateAccountNumber() {
+
+    $accountNumber = "AC" . rand(100000000, 999999999);
+    return $accountNumber;
 }
 
-$query = "SELECT * FROM users WHERE name = '$name' AND password = '$password'";
-$result = $connection->query($query);
-
-if ($result->num_rows == 1) {
-    // Admin login successful
-    session_start();
-    $_SESSION['name'] = $name;
-    header("Location: main.html"); // Redirect to the admin dashboard or desired page
-} else {
-    // Admin login failed
-    echo "Invalid username or password";
+//odczytanie hashowanego hasla
+function hashPassword($password) {
+    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+    return $hashedPassword;
+}
+//weryfikacja hasla
+function verifyPassword($password, $hashedPassword) {
+    return password_verify($password, $hashedPassword);
 }
 
 
-// Close the database connection
+// ---------------przekierowanie--------------
+function redirect($role) {
+    if ($role ==='admin') {
+        header("Location: admin.php");
+        exit();
+    }
+    else {
+        header("Location: main.html");
+        exit();
+    }
+
+}
+
+// ----------------logowanie----------------
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+//wez dane z formularza
+    $sql = "SELECT * FROM users WHERE email = '$email'";
+    $result = $connection->query($sql);
+
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        $hashedPassword = $row["password"];
+        $role = $row["role"];
+//weryfikacja hasla
+        if (verifyPassword($password, $hashedPassword)) {
+//przekierowanie zgodnie z rola
+            redirect($role);
+        } else {
+            echo "Niepoprawne hasło";
+        }
+    } else {
+
+        echo "Niepoprawny login";
+    }
+}
+
+
 $connection->close();
 ?>
