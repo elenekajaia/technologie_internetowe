@@ -57,12 +57,21 @@ session_start();
       }
       
       $connection->close();
-      
-     
-     
+    ?>
 
+<h2>Przelew między kontami</h2>
+        <form action="transfer.php" method="post">
+            <label for="from_account">Numer konta źródłowego:</label>
+            <input type="text" id="from_account" name="from_account" required><br>
 
-?>
+            <label for="to_account">Numer konta docelowego:</label>
+            <input type="text" id="to_account" name="to_account" required><br>
+
+            <label for="amount">Kwota:</label>
+            <input type="number" id="amount" name="amount" min="0" step="0.01" required><br>
+
+            <input type="submit" name="transfer" value="Przelej">
+        </form>
         </main>
 
         <!-- stopka -->
