@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Panel admina</title>
+    <title>Panel pracownika</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="admin_style.css">
+   <link rel="stylesheet" href="pracownik_style.css">
 </head>
 <body>
 
         <header>
           <!-- navbar -->
           <nav>
-            <h1>Panel admina</h1>
+            <h1>Panel pracownika</h1>
               <ul>
                 <li><a href="logout.php">Wyloguj</a></li> 
               </ul>
@@ -20,29 +20,6 @@
 
 <main>
 <div class="dropdown-container">
-
-
-<!-- zarzadzanie baza danych -->
-<button id="dropdown-btn-1" onclick="toggleDropdown('backup-container')">Zarządzanie bazą danych</button>
-
-<section id="backup-container">
-    <section class="database-backup">
-    <h1>Backup</h1>
-      <form action="backup.php" method="post">
-          <input type="submit" value="Zrób backup bazy danych">
-      </form>
-    </section>
-
-    <section class="backup-restoration">
-    <h1>Odzyskiwanie bazy danych</h1>
-      <form action="restore.php" method="post" enctype="multipart/form-data">
-          <label for="backupFile">Wybierz zaszyfrowany plik z bazą danych:</label>
-          <input type="file" name="backupFile" id="backupFile" required><br>
-
-          <input type="submit" value="Odzyskaj">
-      </form>
-  </section>
-</section>
 
 <!-- zarzadzanie uzytkownikami -->
 
@@ -103,6 +80,9 @@
     $conn->close();
     ?>
   </table>
+
+
+
   <h2>Wybierz użytkownika po ID</h2>
   <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
     <input type="text" name="user_id" placeholder="ID">
@@ -160,22 +140,16 @@
   </form>
     </section>
 
-    <section class="delete-user">
-    <h2>Usuń użytkownika</h2>
-    <form action="delete_user.php" method="POST">
-    <input type="int" name="user_id" placeholder="ID">
-    <input type="submit" value="Usuń">
-  </form>
-    </table>
-    </section>
 </section>
 
 
-
-<button id="dropdown-btn-3" onclick="toggleDropdown('transactions')">Transakcje</button>
+<!-- transakcje -->
+<button id="dropdown-btn-3" onclick="toggleDropdown('transactions')">Historia transakcji</button>
 <section id="transactions">
-  <h3>Historia transakcji</h3>
-<?php
+    
+<section id="view-history">
+    <h3>Historia transakcji</h3>
+                    <?php
                 // Database connection configuration
                 $servername = "localhost";
                 $username = "root";
@@ -220,8 +194,10 @@
                 $conn->close();
                 ?>
 </section>
-</div>
+</section>
 
+
+</div>
 <!-- skrypt rozwijajacy opcje -->
 <script>
   function toggleDropdown(contentId) {

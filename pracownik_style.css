@@ -174,18 +174,6 @@
 
 /* dropdown */
 
-  #backup-container {
-    display: none;
-    padding: 10px;
-    background-color: #f1f1f1;
-    margin-bottom: 20px;
-  }
-
-  #backup-container.show {
-    display: block;
-  }
-  
-
   #user-management {
     display: none;
     padding: 10px;
@@ -195,37 +183,21 @@
   #user-management.show {
     display: block;
   }
+
   #transactions {
     display: none;
     padding: 10px;
     background-color: #f1f1f1;
     margin-bottom: 20px;
   }
+
   #transactions.show {
     display: block;
   }
-
+  
 
   /* wyglad containerow */
-  .database-backup {
- 
-    padding: 10px;
-    background-color: #f1f1f1;
-    margin-top: 60px;
-  }
-
-  .database-backup h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
   
-  .backup-restoration {
-
-    background-color: #fff;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 4px;
-  }
   .user-management {
     margin-top: 60px;
   }

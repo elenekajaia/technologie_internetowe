@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 14 Cze 2023, 22:55
+-- Czas generowania: 17 Cze 2023, 22:33
 -- Wersja serwera: 10.4.27-MariaDB
 -- Wersja PHP: 8.0.25
 
@@ -40,14 +40,15 @@ CREATE TABLE `accounts` (
 
 INSERT INTO `accounts` (`account_number`, `account_type`, `balance`, `user_id`) VALUES
 (' PL77783862819843776', 'biznesowe', '1298.00', 10),
-('PL098814482734500383', 'osobiste', '2500.00', 1),
+('PL098814482734500383', 'osobiste', '3.00', 1),
 ('PL112628323442716937', 'biznesowe', '64985.00', 6),
 ('PL134683977576435545', 'biznesowe', '100000.00', 5),
 ('PL174269261527568031', 'osobiste', '58000.00', 7),
 ('PL206783744090241427', 'osobiste', '9430.00', 8),
 ('PL311346208914409825', 'osobiste', '45.00', 12),
 ('PL688337581709414354', 'osobiste', '6724.00', 11),
-('PL792126029843474692', 'osobiste', '321.00', 9);
+('PL792126029843474692', 'osobiste', '100.00', 9),
+('PL898046107046583338', 'osobiste', '80.00', 22);
 
 -- --------------------------------------------------------
 
@@ -150,7 +151,8 @@ INSERT INTO `users` (`user_id`, `name`, `phone`, `email`, `password`, `last_logi
 (11, 'Katarzyna Szara', 210345689, 'szara.kasia@gmail.com', '$2y$10$I09Bgiy9is1PY7Mtl3H7CO70/j.gfbtpTXEmfWY51MWbPE/fY8MeO', NULL, 'client'),
 (12, 'Michał Nowak', 505404303, 'nowakmichal@gmail.com', '$2y$10$QGddKNozzqNzY9zVBpprMOG2vp/35KsjafIZX3F1dilGO6PRKys0K', NULL, 'client'),
 (22, 'Test', 666777888, 'test@o2.pl', '$2y$10$eiG3/niUu8q4UYikvhyGQ.2/AaXOtn2FWYVND/tQ9NAvX/NduWIqC', NULL, 'client'),
-(23, 'Test bezpieczenstwa', 222555888, 'admin@admin.pl', '$2y$10$2PWkUOIa2l3Tlqo0QmD11.aEBFoVUW8UDVRBkmfI9C6b4M36ntyj2', NULL, 'admin');
+(23, 'Test bezpieczenstwa', 222555888, 'admin@admin.pl', '$2y$10$2PWkUOIa2l3Tlqo0QmD11.aEBFoVUW8UDVRBkmfI9C6b4M36ntyj2', NULL, 'admin'),
+(24, 'testpracownik', 777888999, 'test@pracownik.pl', '$2y$10$qEEx9Neo1A3z8SRbElaJXOqmv7DKerIpXufeXEhzzBzYbwgWnmpJ6', NULL, 'pracownik');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -209,10 +211,16 @@ ALTER TABLE `admins`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT dla tabeli `transactions`
+--
+ALTER TABLE `transactions`
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2147483648;
+
+--
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- Ograniczenia dla zrzutów tabel

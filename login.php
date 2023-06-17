@@ -40,11 +40,15 @@ function redirect($role) {
         header("Location: admin.php");
         exit();
     }
+    
+    elseif ($role == 'pracownik') {
+        header("Location: pracownik.php");
+    }
+    
     else {
         header("Location: main.php");
         exit();
     }
-
 }
 
 // ----------------logowanie----------------
