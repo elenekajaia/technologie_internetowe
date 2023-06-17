@@ -51,9 +51,18 @@ function redirect($role) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
     $password = $_POST["password"];
+
+    //wstrzykiwanie SQL próba jeden
+    // $email = htmlentities($email,ENT_QUOTES,"UTF-8");
+    // $password = htmlentities($password,ENT_QUOTES,"UTF-8");
+
+
 //wez dane z formularza
-    $sql = "SELECT * FROM users WHERE email = '$email'";
-    $result = $connection->query($sql);
+    // wstrzykiwanie SQL - Prepare and bind the parameter
+    $stmt = $connection->prepare("SELECT * FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if ($result->num_rows == 1) {
         $row = $result->fetch_assoc();
@@ -61,8 +70,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['user_id'] = $row['user_id']; //pobiera id i wrzuca do
        //ma pobrac tez account number
        $user_id = $row['user_id'];
-    $account_sql = "SELECT account_number FROM accounts WHERE user_id = '$user_id'";
-    $account_result = $connection->query($account_sql);
+
+      // wstrzykiwanie SQL - Prepare and bind the parameter
+        $stmt = $connection->prepare("SELECT account_number FROM accounts WHERE user_id = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $account_result = $stmt->get_result();
 
     if ($account_result->num_rows == 1) {
         $account_row = $account_result->fetch_assoc();
