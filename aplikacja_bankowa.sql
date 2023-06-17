@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 14 Cze 2023, 22:55
+-- Czas generowania: 17 Cze 2023, 18:02
 -- Wersja serwera: 10.4.27-MariaDB
--- Wersja PHP: 8.0.25
+-- Wersja PHP: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -46,8 +46,9 @@ INSERT INTO `accounts` (`account_number`, `account_type`, `balance`, `user_id`) 
 ('PL174269261527568031', 'osobiste', '58000.00', 7),
 ('PL206783744090241427', 'osobiste', '9430.00', 8),
 ('PL311346208914409825', 'osobiste', '45.00', 12),
-('PL688337581709414354', 'osobiste', '6724.00', 11),
-('PL792126029843474692', 'osobiste', '321.00', 9);
+('PL688337581709414354', 'osobiste', '2015.00', 11),
+('PL75583852819845776', 'osobiste', '2005.00', 22),
+('PL792126029843474692', 'osobiste', '2020.00', 9);
 
 -- --------------------------------------------------------
 
@@ -84,6 +85,15 @@ CREATE TABLE `transactions` (
   `sender_account_number` varchar(20) DEFAULT NULL,
   `receiver_account_number` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Zrzut danych tabeli `transactions`
+--
+
+INSERT INTO `transactions` (`transaction_id`, `transaction_type_id`, `amount`, `transaction_date`, `sender_account_number`, `receiver_account_number`) VALUES
+(1, 1, '1.00', '0000-00-00 00:00:00', 'PL75583852819845776', 'PL688337581709414354'),
+(648, 1, '5.00', '2023-06-17 11:17:45', 'PL75583852819845776', 'PL688337581709414354'),
+(2147483647, 1, '9.00', '2023-06-17 12:22:46', 'PL75583852819845776', 'PL792126029843474692');
 
 -- --------------------------------------------------------
 
@@ -150,7 +160,9 @@ INSERT INTO `users` (`user_id`, `name`, `phone`, `email`, `password`, `last_logi
 (11, 'Katarzyna Szara', 210345689, 'szara.kasia@gmail.com', '$2y$10$I09Bgiy9is1PY7Mtl3H7CO70/j.gfbtpTXEmfWY51MWbPE/fY8MeO', NULL, 'client'),
 (12, 'Michał Nowak', 505404303, 'nowakmichal@gmail.com', '$2y$10$QGddKNozzqNzY9zVBpprMOG2vp/35KsjafIZX3F1dilGO6PRKys0K', NULL, 'client'),
 (22, 'Test', 666777888, 'test@o2.pl', '$2y$10$eiG3/niUu8q4UYikvhyGQ.2/AaXOtn2FWYVND/tQ9NAvX/NduWIqC', NULL, 'client'),
-(23, 'Test bezpieczenstwa', 222555888, 'admin@admin.pl', '$2y$10$2PWkUOIa2l3Tlqo0QmD11.aEBFoVUW8UDVRBkmfI9C6b4M36ntyj2', NULL, 'admin');
+(23, 'Test bezpieczenstwa', 222555888, 'admin@admin.pl', '$2y$10$2PWkUOIa2l3Tlqo0QmD11.aEBFoVUW8UDVRBkmfI9C6b4M36ntyj2', NULL, 'admin'),
+(24, 'Elena test2', 454545, 'te@st.pl', '$2y$10$OMDh/LX8keHEmOItxqyJPeP.aueQv7TfuyPMoQzLHnaLH0fqd1MZe', NULL, 'client'),
+(25, 'dcdc', 44444, '', '$2y$10$BalbZaP5p45WD4BpOwLHX.gG.ZC.gvN66s8tcPTZhXsVDKJ7.65n.', NULL, 'client');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -209,10 +221,16 @@ ALTER TABLE `admins`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT dla tabeli `transactions`
+--
+ALTER TABLE `transactions`
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2147483648;
+
+--
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- Ograniczenia dla zrzutów tabel
