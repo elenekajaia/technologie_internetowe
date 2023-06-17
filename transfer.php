@@ -11,7 +11,7 @@ if ($connection->connect_errno) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['transfer'])) {
-    $fromAccount = $_POST["from_account"];
+    $fromAccount = $_SESSION['account_number'];
     $toAccount = $_POST["to_account"];
     $amount = $_POST["amount"];
 
@@ -32,21 +32,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['transfer'])) {
             $sql = "UPDATE accounts SET balance = '$newBalanceTo' WHERE account_number = '$toAccount'";
             $connection->query($sql);
 
-// Generate unique transaction ID
-$transactionId = uniqid();
+            $transactionTypeId = 1; // Assuming 1 represents transfer transactions
+            $transactionDate = date("Y-m-d H:i:s");
 
-// Save transaction details in the "transactions" table
-$transactionTypeId = 1; // Assuming 1 represents transfer transactions
-$transactionDate = date("Y-m-d H:i:s");
-
-// Prepare and execute the INSERT statement
-$stmt = $connection->prepare("INSERT INTO transactions (transaction_id, transaction_type_id, amount, transaction_date, sender_account_number, receiver_account_number) VALUES (?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("sidsss", $transactionId, $transactionTypeId, $amount, $transactionDate, $fromAccount, $toAccount);
-$stmt->execute();
-$stmt->close();
-
-
-             
+            // Prepare and execute the INSERT statement
+            $stmt = $connection->prepare("INSERT INTO transactions (transaction_type_id, amount, transaction_date, sender_account_number, receiver_account_number) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bind_param("dssss", $transactionTypeId, $amount, $transactionDate, $fromAccount, $toAccount);
+            $stmt->execute();
+            $stmt->close();
 
             echo "Przelew wykonany pomyślnie.";
         } else {
@@ -58,4 +51,6 @@ $stmt->close();
 }
 
 $connection->close();
+
+
 ?>
