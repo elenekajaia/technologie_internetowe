@@ -1,0 +1,74 @@
+<?php 
+session_start();
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="mainstyle.css">
+    <title>Aplikacja bankowa</title>
+</head>
+<body>
+
+        <header>
+          <!-- navbar -->
+          <nav>
+            <h1>Aplikacja bankowa</h1>
+              <ul>
+                <li><a href="logout.php">Wyloguj</a></li>
+              </ul>
+          </nav>
+        </header>
+
+        <main>
+      <?php
+      echo"<p>witaj Twoje ID to ".$_SESSION['user_id']."!";
+      $host = 'localhost';
+      $username = 'root';
+      $password = '';
+      $database = 'aplikacja_bankowa';
+      
+      $connection = new mysqli($host, $username, $password, $database);
+      if ($connection->connect_errno) {
+          die("Failed to connect to MySQL: " . $connection->connect_error);
+      }
+      
+      if (!isset($_SESSION['user_id'])) {
+          // User is not logged in, redirect them to the login page or display an error message
+          header("Location: login.php");
+          exit();
+      }
+      
+      $user_id = $_SESSION['user_id'];
+      
+      // Retrieve the balance from the accounts table
+      $sql = "SELECT balance FROM accounts WHERE user_id = $user_id";
+      $result = $connection->query($sql);
+      
+      if ($result->num_rows == 1) {
+          $row = $result->fetch_assoc();
+          $balance = $row['balance'];
+      
+          echo "<p>Saldo pozostałe na twoim koncie: " . $balance." PLN";
+      } else {
+          echo "Failed to retrieve balance.";
+      }
+      
+      $connection->close();
+      
+     
+     
+
+
+?>
+        </main>
+
+        <!-- stopka -->
+        <footer>
+            <p>&copy; 2023 Technologie internetowe - Julia Kapica, Elene Kajaia
+          </footer>
+          
+</body>
+</html>

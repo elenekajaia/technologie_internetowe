@@ -1,4 +1,5 @@
 <?php
+session_start();
 $host = 'localhost';
 $username = 'root';
 $password = '';
@@ -40,7 +41,7 @@ function redirect($role) {
         exit();
     }
     else {
-        header("Location: main.html");
+        header("Location: main.php");
         exit();
     }
 
@@ -56,6 +57,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result->num_rows == 1) {
         $row = $result->fetch_assoc();
+
+        $_SESSION['user_id'] = $row['user_id']; //pobiera id i wrzuca do
+       
         $hashedPassword = $row["password"];
         $role = $row["role"];
 //weryfikacja hasla
