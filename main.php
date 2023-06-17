@@ -24,7 +24,8 @@ session_start();
 
         <main>
       <?php
-      echo"<p>witaj Twoje ID to ".$_SESSION['user_id']."!";
+      echo"<p> Twoje ID to ".$_SESSION['user_id']."  (do szybkiego sprawdzenie w bazie danych, będzie usunięte pozniej)";
+      echo"<p>WITAMY twoj numer konta  to ".$_SESSION['account_number'];
       $host = 'localhost';
       $username = 'root';
       $password = '';
@@ -72,6 +73,8 @@ session_start();
 
             <input type="submit" name="transfer" value="Przelej">
         </form>
+        <a href="transaction_history.php">Show Transaction History</a>
+
         </main>
 
         <!-- stopka -->

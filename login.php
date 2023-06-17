@@ -59,9 +59,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $row = $result->fetch_assoc();
 
         $_SESSION['user_id'] = $row['user_id']; //pobiera id i wrzuca do
-       
+       //ma pobrac tez account number
+       $user_id = $row['user_id'];
+    $account_sql = "SELECT account_number FROM accounts WHERE user_id = '$user_id'";
+    $account_result = $connection->query($account_sql);
+
+    if ($account_result->num_rows == 1) {
+        $account_row = $account_result->fetch_assoc();
+        $account_number = $account_row['account_number'];
+        // Store the account number in the session or use it as needed
+        $_SESSION['account_number'] = $account_number;
+    }
+
+
+
         $hashedPassword = $row["password"];
         $role = $row["role"];
+
 //weryfikacja hasla
         if (verifyPassword($password, $hashedPassword)) {
 //przekierowanie zgodnie z rola
