@@ -121,7 +121,7 @@
     if ($conn->connect_error) {
       die("Connection failed: " . $conn->connect_error);
     }
-//nic
+
     $user_id = $_GET['user_id'];
 
     // wez dane z bazy
@@ -176,31 +176,31 @@
 <section id="transactions">
   <h2>Historia transakcji</h2>
 <?php
-                // Database connection configuration
+                
                 $servername = "localhost";
                 $username = "root";
                 $password = "";
                 $database = "aplikacja_bankowa";
 
-                // Create a connection
+               
                 $conn = new mysqli($servername, $username, $password, $database);
 
-                // Check connection
+                
                 if ($conn->connect_error) {
                     die("Connection failed: " . $conn->connect_error);
                 }
 
-                // SQL query to fetch transactions from the table
+              //  weż dane z tabeli
                 $sql = "SELECT * FROM transactions";
                 $result = $conn->query($sql);
 
-                // Check if there are any records
+                // sprawdz czy sa rekordy w tabeli
                 if ($result->num_rows > 0) {
-                    // Output data in a table format
+                    // wyswietl w ten sposob
                     echo "<table>";
                     echo "<tr><th>ID</th><th>Amount</th><th>Date</th><th>Sender</th><th>Receiver</th></tr>";
                     
-                    // Loop through each row and display the data
+                    // wyswietl dane
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>";
                         echo "<td>".$row['transaction_id']."</td>";
@@ -216,7 +216,7 @@
                     echo "No transactions found.";
                 }
 
-                // Close the connection
+               
                 $conn->close();
                 ?>
 </section>

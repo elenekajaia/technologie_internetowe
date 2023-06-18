@@ -16,7 +16,6 @@ $conn = new mysqli($servername, $db_username, $db_password, $dbname);
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
-//nic
 //funkcja wysylajaca dane do bazy
 $stmt = $conn->prepare("UPDATE users SET  name=?, phone=?, email = ? WHERE user_id = ?");
 $stmt->bind_param("sisi", $new_name, $new_phone, $new_email, $user_id);

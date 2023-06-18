@@ -9,7 +9,7 @@ $mysqli = new mysqli($databaseHost, $databaseUser, $databasePassword, $databaseN
 if ($mysqli->connect_error) {
     die("Connection failed: " . $mysqli->connect_error);
 }
-//nic
+
 // dane do szyfrowania
 $encryptionKey = 'bezpieczenstwo_systemow';
 $backupFile = 'backup.sql';

@@ -5,7 +5,7 @@
     box-sizing: border-box;
     
   }
-  
+  /* wygląd ogólny */
   body {
     font-family: 'Lato', sans-serif;
     background-color: #e1f1f4;
@@ -19,6 +19,7 @@
   main {
     flex: 1;
   }
+  /* wygląd navbaru */
   header {
     background: #f2f2f2;
     padding: 20px;
@@ -220,7 +221,7 @@
     border-radius: 4px;
   }
 
-
+/* wygląd przycisków w containerach */
   #btn {
     background-color: #fff;
     border: 1px solid #d5d9d9;
@@ -255,7 +256,7 @@
     outline: 0;
   }
 
-
+/* wygląd wnętrza containerów */
 
   .user-management {
     margin-top: 60px;

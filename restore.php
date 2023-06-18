@@ -9,7 +9,7 @@ $databasePassword = '';
 $encryptionKey = 'bezpieczenstwo_systemow';
 $encryptedFile = 'encrypted_backup.dat';
 $decryptedFile = 'decrypted_backup.sql';
-//nic
+
 //odczyt szyfrowanych danych
 $encryptedData = file_get_contents($encryptedFile);
 

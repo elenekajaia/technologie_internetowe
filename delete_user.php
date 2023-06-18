@@ -1,5 +1,5 @@
 <?php
-//dane z formularza
+//wez dane z formularza
 $user_id = $_POST['user_id'];
 
 
@@ -7,7 +7,7 @@ $servername = "localhost";
 $db_username = "root";
 $db_password = "";
 $dbname = "aplikacja_bankowa";
-//nic
+
 $conn = new mysqli($servername, $db_username, $db_password, $dbname);
 
 if ($conn->connect_error) {

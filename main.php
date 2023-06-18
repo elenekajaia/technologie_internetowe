@@ -1,11 +1,11 @@
 <?php
 session_start();
 
-// Check if the "show_history" button was clicked
+// sprawdz czy opcja byla juz kliknieta
 if (isset($_POST['show_history'])) {
     $_SESSION['show_history'] = true;
 } elseif (isset($_POST['hide_history'])) {
-    // If the "hide_history" button was clicked, unset the session variable to hide the transaction history
+    // zwin container
     unset($_SESSION['show_history']);
 }
 ?>
@@ -17,7 +17,8 @@ if (isset($_POST['show_history'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="mainstyle.css">
-    <style>
+    <!-- wyglad przycisku -->
+    <style> 
         .btn {
             background-color: #174ea6;
             border: none;
@@ -60,28 +61,28 @@ if (isset($_POST['show_history'])) {
         }
 
         if (!isset($_SESSION['user_id'])) {
-            // User is not logged in, redirect them to the login page or display an error message
+            // jesli user jest niezalogowany, przekieruj do logowania
             header("Location: login.php");
             exit();
         }
 
         $user_id = $_SESSION['user_id'];
 
-        // Retrieve the balance from the accounts table
+        // wez dane z tabeli
         $sql = "SELECT balance FROM accounts WHERE user_id = $user_id";
         $result = $connection->query($sql);
-
+        //sprawdz czy dane sa w tabeli
         if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
             $balance = $row['balance'];
-
+            //wyswietl saldo
             echo "<p>Saldo pozostałe na twoim koncie: " . $balance . " PLN";
         } else {
-            echo "Failed to retrieve balance.";
+            echo "Błąd w wyświetlaniu salda.";
         }
 
         $user_id = $_SESSION['user_id'];
-
+        //statement dla wyswietlenia informacji o koncie na ktorym jest sesja
         $query = "SELECT t.*, u.sender_account_number AS sender_account, u.receiver_account_number AS receiver_account
                   FROM transactions t
                   INNER JOIN (
@@ -95,7 +96,7 @@ if (isset($_POST['show_history'])) {
         $result = $connection->query($query);
 
         if (!$result) {
-            die("Error executing query: " . $connection->error);
+            die("Błąd: " . $connection->error);
         }
 
         $transactions = $result->fetch_all(MYSQLI_ASSOC);
@@ -104,7 +105,7 @@ if (isset($_POST['show_history'])) {
 
         <h1>Przelew między kontami</h1>
         <form action="transfer.php" method="post">
-            <!-- Removed the "from_account" input field -->
+            <!-- pobieranie numeru konta do przelewu jako sender -->
             <input type="hidden" name="from_account" value="<?php echo $_SESSION['account_number']; ?>">
 
             <label for="to_account">Numer konta docelowego:</label>
@@ -132,6 +133,7 @@ if (isset($_POST['show_history'])) {
 
         <?php if (isset($_SESSION['show_history'])) { ?>
              <br></br>
+
             <h1>Histora transakcji</h1>
             <table style="border-collapse: collapse; width: 100%;">
     <thead>

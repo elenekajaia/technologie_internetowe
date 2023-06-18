@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 //wez dane z formularza
-    // wstrzykiwanie SQL - Prepare and bind the parameter
+    // wstrzykiwanie SQL - zrob statement
     $stmt = $connection->prepare("SELECT * FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
        //ma pobrac tez account number
        $user_id = $row['user_id'];
 
-      // wstrzykiwanie SQL - Prepare and bind the parameter
+      // wstrzykiwanie SQL - statement
         $stmt = $connection->prepare("SELECT account_number FROM accounts WHERE user_id = ?");
         $stmt->bind_param("i", $user_id);
         $stmt->execute();
@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($account_result->num_rows == 1) {
         $account_row = $account_result->fetch_assoc();
         $account_number = $account_row['account_number'];
-        // Store the account number in the session or use it as needed
+        // zachowuje numer konta w sesji
         $_SESSION['account_number'] = $account_number;
     }
 

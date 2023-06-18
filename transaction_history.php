@@ -9,14 +9,14 @@ $connection = new mysqli($host, $username, $password, $database);
 if ($connection->connect_errno) {
     die("Failed to connect to MySQL: " . $connection->connect_error);
 }
-
+// sprawdzenie sesji i przekierowanie na strone loginu
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
 }
 
 $user_id = $_SESSION['user_id'];
-
+// statement do informacji dla danego konta
 $query = "SELECT t.*, u.sender_account_number AS sender_account, u.receiver_account_number AS receiver_account
           FROM transactions t
           INNER JOIN (
@@ -53,6 +53,7 @@ $transactions = $result->fetch_all(MYSQLI_ASSOC);
             </tr>
         </thead>
         <tbody>
+            <!-- wyswietlenie informacji dla historii transakcji dla danego konta -->
             <?php foreach ($transactions as $transaction) { ?>
                 <tr>
                     <td><?php echo $transaction['transaction_id']; ?></td>

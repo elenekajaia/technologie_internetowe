@@ -21,7 +21,7 @@ if (isset($_POST['send'])) {
     $email = htmlspecialchars($_POST['email']);
     $password = htmlspecialchars($_POST['password']);
     $hash = password_hash($password, PASSWORD_BCRYPT);
-//nic
+
  //wysklij dane do bazy
     $stmt = mysqli_prepare($conn, "INSERT INTO users (name, phone, email, password, role) VALUES (?, ?, ?, ?, 'client')");
     mysqli_stmt_bind_param($stmt, 'siss', $name, $phone, $email, $hash);
