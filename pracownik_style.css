@@ -207,7 +207,78 @@
     margin-bottom: 20px;
   }
   
+  #btn {
+    background-color: #fff;
+    border: 1px solid #d5d9d9;
+    border-radius: 8px;
+    box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+    box-sizing: border-box;
+    color: #0f1111;
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Amazon Ember",sans-serif;
+    font-size: 13px;
+    line-height: 29px;
+    padding: 0 10px 0 11px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    width: auto;
 
+  }
+  
+  #btn:hover {
+    background-color: #f7fafa;
+  }
+  
+  #btn:focus {
+    border-color: #008296;
+    box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+    outline: 0;
+  }
+
+
+
+  #user-management {
+    margin-top: 60px;
+    color: #1c2337;
+    background-color: #e1f1f4;
+  }
+  
+  #user-management h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    font-weight: lighter;
+  }
+  #user-management h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: lighter;
+  }
+  
+  .users-list {
+    background-color: #e1f1f4;
+    padding: 80px 0;
+    text-align: center;
+  }
+  
+  
+  .users-list p {
+    font-size: 18px;
+    margin-bottom: 40px;
+  }
+  #transactions {
+    background-color: #e1f1f4;
+  }
+  #transactions h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    font-weight: lighter;
+  }
   /* tabela users */
   table {
     width: 100%;

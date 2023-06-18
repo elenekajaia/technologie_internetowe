@@ -34,7 +34,7 @@
     <input type="email" name="email" placeholder="Email">
     <input type="password" name="password" placeholder="Hasło">
     
-    <input type="submit" value="Dodaj użytkownika">
+    <input type="submit" value="Dodaj użytkownika" id="btn">
   </form>
   </section>
 
@@ -86,7 +86,7 @@
   <h2>Wybierz użytkownika po ID</h2>
   <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
     <input type="text" name="user_id" placeholder="ID">
-    <input type="submit" value="Znajdź użytkownika">
+    <input type="submit" value="Znajdź użytkownika" id="btn">
   </form>
   <?php
   if (isset($_GET['user_id'])) {
@@ -136,7 +136,7 @@
     <input type="name" name="name" placeholder="Nowe Imie i Nazwisko">
     <input type="phone" name="phone" placeholder="Nowy Telefon">
     <input type="email" name="email" placeholder="Nowy Email">
-    <input type="submit" value="Zaktualizuj">
+    <input type="submit" value="Zaktualizuj" id="btn">
   </form>
     </section>
     <section class="delete-user">
@@ -144,7 +144,7 @@
 <h2>Usuń użytkownika</h2>
 <form action="delete_user.php" method="POST">
     <input type="int" name="user_id" placeholder="ID">
-    <input type="submit" value="Usuń">
+    <input type="submit" value="Usuń" id="btn">
 </form>
 
 </section>
