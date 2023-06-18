@@ -15,7 +15,7 @@ if ($conn->connect_error) {
 }
 
 //usuniecie usera z bazy danych
-$stmt = $conn->prepare("DELETE FROM users WHERE id = ?");
+$stmt = $conn->prepare("DELETE FROM users WHERE user_id = ?");
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $stmt->close();

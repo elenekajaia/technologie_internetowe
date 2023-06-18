@@ -125,7 +125,7 @@
     $user_id = $_GET['user_id'];
 
     // wez dane z bazy
-    $sql = "SELECT * FROM users WHERE id = $user_id";
+    $sql = "SELECT * FROM users WHERE user_id = $user_id";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {

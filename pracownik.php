@@ -105,7 +105,7 @@
     $user_id = $_GET['user_id'];
 
     // wez dane z bazy
-    $sql = "SELECT * FROM users WHERE id = $user_id";
+    $sql = "SELECT * FROM users WHERE user_id = $user_id";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -139,6 +139,13 @@
     <input type="submit" value="Zaktualizuj">
   </form>
     </section>
+    <section class="delete-user">
+
+<h2>Usuń użytkownika</h2>
+<form action="delete_user.php" method="POST">
+    <input type="int" name="user_id" placeholder="ID">
+    <input type="submit" value="Usuń">
+</form>
 
 </section>
 
