@@ -29,17 +29,17 @@
     <section class="database-backup">
     <h1>Backup</h1>
       <form action="backup.php" method="post">
-          <input type="submit" value="Zrób backup bazy danych">
+          <input type="submit" value="Zrób backup bazy danych" id="btn">
       </form>
     </section>
-
+<hr class="hr-blur">
     <section class="backup-restoration">
     <h1>Odzyskiwanie bazy danych</h1>
       <form action="restore.php" method="post" enctype="multipart/form-data">
           <label for="backupFile">Wybierz zaszyfrowany plik z bazą danych:</label>
-          <input type="file" name="backupFile" id="backupFile" required><br>
+          <input type="file" name="backupFile" id="backupFile" id="btn" required><br>
 
-          <input type="submit" value="Odzyskaj">
+          <input type="submit" value="Odzyskaj" id="btn">
       </form>
   </section>
 </section>
@@ -57,12 +57,12 @@
     <input type="email" name="email" placeholder="Email">
     <input type="password" name="password" placeholder="Hasło">
     
-    <input type="submit" value="Dodaj użytkownika">
+    <input type="submit" value="Dodaj użytkownika" id="btn">
   </form>
   </section>
 
   <section class="users-list">
-  <h2>Lista użytkowników</h2>
+  <h3>Lista użytkowników</h3>
   <table>
 
     <?php
@@ -103,10 +103,10 @@
     $conn->close();
     ?>
   </table>
-  <h2>Wybierz użytkownika po ID</h2>
+  <h3>Wybierz użytkownika po ID</h3>
   <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
     <input type="text" name="user_id" placeholder="ID">
-    <input type="submit" value="Znajdź użytkownika">
+    <input type="submit" value="Znajdź użytkownika" id="btn">
   </form>
   <?php
   if (isset($_GET['user_id'])) {
@@ -150,13 +150,13 @@
   
   <section class="update-user">
   
-  <h2>Zaktualizuj dane użytkownika</h2>
+  <h3>Zaktualizuj dane użytkownika</h3>
   <form action="update_user.php" method="POST">
     <input type="int" name="user_id" placeholder="ID">
     <input type="name" name="name" placeholder="Nowe Imie i Nazwisko">
     <input type="phone" name="phone" placeholder="Nowy Telefon">
     <input type="email" name="email" placeholder="Nowy Email">
-    <input type="submit" value="Zaktualizuj">
+    <input type="submit" value="Zaktualizuj" id="btn">
   </form>
     </section>
 
@@ -164,7 +164,7 @@
     <h2>Usuń użytkownika</h2>
     <form action="delete_user.php" method="POST">
     <input type="int" name="user_id" placeholder="ID">
-    <input type="submit" value="Usuń">
+    <input type="submit" value="Usuń" id="btn">
   </form>
     </table>
     </section>
@@ -174,7 +174,7 @@
 
 <button id="dropdown-btn-3" onclick="toggleDropdown('transactions')">Transakcje</button>
 <section id="transactions">
-  <h3>Historia transakcji</h3>
+  <h2>Historia transakcji</h2>
 <?php
                 // Database connection configuration
                 $servername = "localhost";
