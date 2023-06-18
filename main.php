@@ -17,6 +17,20 @@ if (isset($_POST['show_history'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="mainstyle.css">
+    <style>
+        .btn {
+            background-color: #174ea6;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
     <title>Aplikacja bankowa</title>
 </head>
 <body>
@@ -33,7 +47,7 @@ if (isset($_POST['show_history'])) {
     <main>
         <?php
         echo "<p> Twoje ID to " . $_SESSION['user_id'] . "  (do szybkiego sprawdzenie w bazie danych, będzie usunięte pozniej)";
-        echo "<p>WITAMY twoj numer konta to " . $_SESSION['account_number'];
+        echo "<p>WITAMY! Twoj numer konta to " . $_SESSION['account_number'];
 
         $host = 'localhost';
         $username = 'root';
@@ -89,7 +103,7 @@ if (isset($_POST['show_history'])) {
         $connection->close();
         ?>
 
-        <h2>Przelew między kontami</h2>
+        <h1>Przelew między kontami</h1>
         <form action="transfer.php" method="post">
             <!-- Removed the "from_account" input field -->
             <input type="hidden" name="from_account" value="<?php echo $_SESSION['account_number']; ?>">
@@ -100,41 +114,43 @@ if (isset($_POST['show_history'])) {
             <label for="amount">Kwota:</label>
             <input type="number" id="amount" name="amount" min="0" step="0.01" required><br>
 
-            <input type="submit" name="transfer" value="Przelej">
+            <input type="submit" name="transfer" class="btn" value="Przelej">
         </form>
 
         <form action="" method="post">
             <?php if (!isset($_SESSION['show_history'])) { ?>
-                <button type="submit" name="show_history">Show Transaction History</button>
+                <button type="submit" name="show_history" class="btn">Pokaż historię transakcji</button>
             <?php } else { ?>
-                <button type="submit" name="hide_history">Hide Transaction History</button>
+                <button type="submit" name="hide_history" class="btn">Ukryj historię transakcji</button>
             <?php } ?>
         </form>
 
         <?php if (isset($_SESSION['show_history'])) { ?>
-            <h1>Transaction History</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Transaction ID</th>
-                        <th>Date</th>
-                        <th>Amount</th>
-                        <th>Sender Account</th>
-                        <th style="padding-left: 20px;">Receiver Account</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($transactions as $transaction) { ?>
-                        <tr>
-                            <td><?php echo $transaction['transaction_id']; ?></td>
-                            <td><?php echo $transaction['transaction_date']; ?></td>
-                            <td><?php echo $transaction['amount']; ?></td>
-                            <td><?php echo $transaction['sender_account']; ?></td>
-                            <td style="padding-left: 20px;"><?php echo $transaction['receiver_account']; ?></td>
-                        </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
+             <br></br>
+            <h1>Histora transakcji</h1>
+            <table style="border-collapse: collapse; width: 100%;">
+    <thead>
+        <tr>
+            <th style="border: 1px solid black; padding: 8px;">ID transakcji</th>
+            <th style="border: 1px solid black; padding: 8px;">Data</th>
+            <th style="border: 1px solid black; padding: 8px;">Wartość</th>
+            <th style="border: 1px solid black; padding: 8px;">Konto wysyłające</th>
+            <th style="border: 1px solid black; padding: 8px;">Konto docelowe</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($transactions as $transaction) { ?>
+            <tr>
+                <td style="border: 1px solid black; padding: 8px;"><?php echo $transaction['transaction_id']; ?></td>
+                <td style="border: 1px solid black; padding: 8px;"><?php echo $transaction['transaction_date']; ?></td>
+                <td style="border: 1px solid black; padding: 8px;"><?php echo $transaction['amount']; ?></td>
+                <td style="border: 1px solid black; padding: 8px;"><?php echo $transaction['sender_account']; ?></td>
+                <td style="border: 1px solid black; padding: 8px;"><?php echo $transaction['receiver_account']; ?></td>
+            </tr>
+        <?php } ?>
+    </tbody>
+</table>
+
         <?php } ?>
     </main>
 
