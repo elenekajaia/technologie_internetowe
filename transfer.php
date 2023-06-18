@@ -40,9 +40,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['transfer'])) {
             $stmt->bind_param("dssss", $transactionTypeId, $amount, $transactionDate, $fromAccount, $toAccount);
             $stmt->execute();
             $stmt->close();
-            echo "Przelew wykonany pomyślnie.";
+            $_SESSION['transfer_message'] = "Przelew wykonany pomyślnie.";
         } else {
-            echo "Niewystarczające środki na koncie.";
+            $_SESSION['transfer_message'] = "Niewystarczające środki na koncie.";
         }
     } else {
         echo "Niepoprawny numer konta.";
@@ -50,6 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['transfer'])) {
 }
 
 $connection->close();
+header("Location: main.php");
 
 
 ?>

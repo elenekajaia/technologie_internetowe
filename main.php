@@ -99,7 +99,6 @@ if (isset($_POST['show_history'])) {
         }
 
         $transactions = $result->fetch_all(MYSQLI_ASSOC);
-//nic
         $connection->close();
         ?>
 
@@ -116,6 +115,12 @@ if (isset($_POST['show_history'])) {
 
             <input type="submit" name="transfer" class="btn" value="Przelej">
         </form>
+        <?php
+    if (isset($_SESSION['transfer_message'])) {
+        echo $_SESSION['transfer_message'];
+        unset($_SESSION['transfer_message']);
+    }
+?>
 
         <form action="" method="post">
             <?php if (!isset($_SESSION['show_history'])) { ?>
