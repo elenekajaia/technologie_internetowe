@@ -148,7 +148,7 @@
 </form>
 
 </section>
-//nic
+
 
 <!-- transakcje -->
 <button id="dropdown-btn-3" onclick="toggleDropdown('transactions')">Historia transakcji</button>
