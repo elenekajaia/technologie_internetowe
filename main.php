@@ -99,7 +99,7 @@ if (isset($_POST['show_history'])) {
         }
 
         $transactions = $result->fetch_all(MYSQLI_ASSOC);
-
+//nic
         $connection->close();
         ?>
 

@@ -35,7 +35,7 @@ if (!$result) {
 
 $transactions = $result->fetch_all(MYSQLI_ASSOC);
 ?>
-
+//nic
 <!DOCTYPE html>
 <html>
 <head>

@@ -121,7 +121,7 @@
     if ($conn->connect_error) {
       die("Connection failed: " . $conn->connect_error);
     }
-
+//nic
     $user_id = $_GET['user_id'];
 
     // wez dane z bazy

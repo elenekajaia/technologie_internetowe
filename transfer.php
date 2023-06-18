@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['transfer'])) {
             $sql = "UPDATE accounts SET balance = '$newBalanceTo' WHERE account_number = '$toAccount'";
             $connection->query($sql);
 
-            $transactionTypeId = 1; // Assuming 1 represents transfer transactions
+            $transactionTypeId = 1; // Assumin 1 represents transfer transactions
             $transactionDate = date("Y-m-d H:i:s");
 
             // Prepare and execute the INSERT statement

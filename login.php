@@ -10,7 +10,7 @@ if ($connection->connect_errno) {
     die("Failed to connect to MySQL: " . $connection->connect_error);
 }
 
-
+//całość
 $email = $_POST['email'];
 $password = $_POST['password'];
 
