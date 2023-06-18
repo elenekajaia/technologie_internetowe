@@ -40,7 +40,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['transfer'])) {
             $stmt->bind_param("dssss", $transactionTypeId, $amount, $transactionDate, $fromAccount, $toAccount);
             $stmt->execute();
             $stmt->close();
-
             echo "Przelew wykonany pomyślnie.";
         } else {
             echo "Niewystarczające środki na koncie.";
